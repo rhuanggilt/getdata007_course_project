@@ -50,9 +50,10 @@ train_set <- cbind(train_subject,train_activity_desc,train2)
 ## Step 5: merge train and test sets together, remove ActivityID
 final_tidy <- merge(test_set[,-2], train_set[,-2], all = TRUE)
 
+## Step 6: get mean by subject and activity for each measure
 output <- aggregate(x = final_tidy[, 3:ncol(final_tidy)], by = list(ID = final_tidy$SubjectID,final_tidy$Activity), FUN = "mean", na.rm = T)
 
-## Step 6: rename column name to make it more human-readable
+## Step 7: rename column name to make it more human-readable
 
 names(output)[1] <- "SubjectID"
 names(output)[2] <- "Activity"
@@ -66,7 +67,7 @@ colnames(output) <- sub("Gyro", "-Gyroscope", colnames(output))
 colnames(output) <- sub("Jerk", "-Jerk Singal", colnames(output))
 colnames(output) <- sub("Mag", "-using Euclidean norm", colnames(output))
 
-## Step 7: finally, export the final output to tidy.txt
+## Step 8: finally, export the final output to tidy.txt
 write.table(output,file="./tidy.txt",row.name=FALSE)
 
 
